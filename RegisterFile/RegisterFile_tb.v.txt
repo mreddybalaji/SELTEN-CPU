@@ -1,0 +1,119 @@
+
+
+module RegisterFile_tb;
+
+  // Parameters
+  parameter DataWidth  = 19;
+  parameter NumRegs    = 16;
+  parameter IndexWidth = 4;
+
+  // Inputs
+  reg clk;
+  reg writeEn;
+  reg [IndexWidth-1:0] writeAddr;
+  reg [DataWidth-1:0] writeData;
+  reg [IndexWidth-1:0] readAddr1;
+  reg [IndexWidth-1:0] readAddr2;
+
+  // Outputs
+  wire [DataWidth-1:0] readData1;
+  wire [DataWidth-1:0] readData2;
+
+  // Instantiate the Unit Under Test (UUT)
+  RegisterFile #(
+    .DataWidth(DataWidth),
+    .NumRegs(NumRegs),
+    .IndexWidth(IndexWidth)
+  ) uut (
+    .clk(clk),
+    .writeEn(writeEn),
+    .writeAddr(writeAddr),
+    .writeData(writeData),
+    .readAddr1(readAddr1),
+    .readAddr2(readAddr2),
+    .readData1(readData1),
+    .readData2(readData2)
+  );
+
+  // Clock generation
+  initial begin
+    clk = 0;
+    forever #5 clk = ~clk;  // 10 ns period clock
+  end
+
+  // Test scenarios
+  initial begin
+    // Initialize Inputs
+    writeEn = 0;
+    writeAddr = 0;
+    writeData = 0;
+    readAddr1 = 0;
+    readAddr2 = 0;
+
+    // Wait for the clock to stabilize
+    #10;
+
+    // Test Case 1: Write to register 0 and read it
+    writeAddr = 4'd0;
+    writeData = 19'b0000000000000000001;
+    writeEn = 1;
+    #10; // Wait for clock edge
+    writeEn = 0;
+    readAddr1 = 4'd0;
+    #10; // Wait for read data
+
+    if (readData1 !== 19'b0000000000000000001)
+      $display("Test Case 1 Failed");
+
+    // Test Case 2: Write to register 1 and read it
+    writeAddr = 4'd1;
+    writeData = 19'b0000000000000000010;
+    writeEn = 1;
+    #10;
+    writeEn = 0;
+    readAddr1 = 4'd1;
+    #10;
+
+    if (readData1 !== 19'b0000000000000000010)
+      $display("Test Case 2 Failed");
+
+    // Test Case 3: Write to register 2 and read from register 1 and 2 simultaneously
+    writeAddr = 4'd2;
+    writeData = 19'b0000000000000000100;
+    writeEn = 1;
+    #10;
+    writeEn = 0;
+    readAddr1 = 4'd1;
+    readAddr2 = 4'd2;
+    #10;
+
+    if (readData1 !== 19'b0000000000000000010 || readData2 !== 19'b0000000000000000100)
+      $display("Test Case 3 Failed");
+
+    // Test Case 4: Write to register 3 and read it
+    writeAddr = 4'd3;
+    writeData = 19'b0000000000000001000;
+    writeEn = 1;
+    #10;
+    writeEn = 0;
+    readAddr1 = 4'd3;
+    #10;
+
+    if (readData1 !== 19'b0000000000000001000)
+      $display("Test Case 4 Failed");
+
+    // Test Case 5: No write, check if data remains unchanged
+    writeEn = 0;
+    readAddr1 = 4'd3;
+    #10;
+
+    if (readData1 !== 19'b0000000000000001000)
+      $display("Test Case 5 Failed");
+
+    // Add more test cases as needed
+
+    $display("Testbench completed");
+    $finish;
+  end
+
+endmodule

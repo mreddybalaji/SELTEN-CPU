@@ -3,6 +3,9 @@
 
   The SELTEN CPU is a 19-bit processor, breaking away from the usual 8, 16, 32, or 64-bit designs. With its 19-bit architecture and casual design, SELTEN features a unique instruction set, multi-stage pipeline, optimized register file, and an ALU designed for efficient, high-performance computing across various applications.
 
+<img width="748" alt="image" src="https://github.com/user-attachments/assets/cd10b2b6-d457-411e-a188-e44bc4ca1287">
+
+
 </details>
 
 <details>

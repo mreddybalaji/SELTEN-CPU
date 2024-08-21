@@ -61,3 +61,32 @@
   In summary, a 19-bit CPU architecture represents a highly specialized and unconventional design choice, typically driven by specific computational needs or experimental purposes. It provides a unique opportunity to explore custom data processing, instruction sets, and hardware design challenges.
 
 </details>
+
+<details>
+  <summary>Arithmetic Logic Unit (ALU)</summary>
+  
+ Arithmetic Logic Unit (ALU)
+
+An Arithmetic Logic Unit (ALU) is a critical component of a CPU that performs arithmetic and logical operations on binary data. It takes input operands, processes them based on control signals, and produces a result.
+
+The ALU in the provided Verilog code has the following features:
+
+## Inputs:
+- Two 19-bit operands.
+- A 4-bit control signal to select the operation.
+
+## Outputs:
+- A 19-bit result that holds the outcome of the operation.
+- A 1-bit flag that indicates whether the result is zero.
+
+## Operations:
+- Various arithmetic and logical operations, including addition, subtraction, multiplication, division, increment, decrement, AND, OR, XOR, and NOT, are defined using a case statement based on the control signal.
+
+## Zero Flag:
+- The code includes logic to set a flag based on whether the result is zero, which can be useful for conditional branching in programs.
+
+The ALU is an essential component that enables the CPU to perform arithmetic and logical operations on data, which are fundamental to executing instructions and performing computations.
+
+  
+
+</details>

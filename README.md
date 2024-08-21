@@ -104,3 +104,91 @@ The ALU is an essential component that enables the CPU to perform arithmetic and
   
 
 </details>
+
+
+
+<details>
+  <summary>ControlUnit</summary>
+
+ CPU (Central Processing Unit), the Control Unit (CU) is a critical component responsible for directing the operations of the processor. It acts as the brain of the CPU, managing the execution of instructions and coordinating the activities of other components like the Arithmetic Logic Unit (ALU), registers, and memory.
+
+<img width="743" alt="ControlUnit_Schematic" src="https://github.com/user-attachments/assets/4210fbd8-a5b3-4d4a-8234-cbefe5ec5989">
+
+
+
+
+A clock signal (`clk`) is toggled every 5 nanoseconds to simulate the behavior of a system clock.
+
+## Input Initialization:
+All inputs to the `Datapath_Unit` are initialized to zero. This means no control signals are active at the beginning of the simulation.
+
+Control Signals and ALU Operation Code
+
+Control Signals:
+These are signals that control the various operations within the CPU, such as memory access, ALU operations, and register operations. Examples include `jump`, `beq`, `bne`, `call`, `ret`, etc.
+
+## ALU Operation Code (`alu_op`):
+
+Simple PC Increment:
+The testbench first waits for 10 nanoseconds and checks if the program counter (`pc_current`) increments normally.
+
+Call:
+The `call` signal is activated for 10 nanoseconds to simulate jumping to a subroutine, then deactivated to see how the PC is updated.
+
+Return:
+The `ret` signal is activated to simulate returning from a subroutine.
+
+Jump:
+The `jump` signal is activated to test an unconditional jump.
+
+Branch if Equal (BEQ):
+The `beq` signal is activated to simulate a branch if equal condition.
+
+Branch if Not Equal (BNE):
+The `bne` signal is activated to simulate a branch if not equal condition.
+
+</details>
+
+<details>
+  <summary>Memory Interface Unit</summary>
+
+The **Memory Interface Unit (MIU)** is essential in handling **Store (ST)** and **Load (LD)** operations in a processor. It ensures that data is accurately and efficiently transferred between the CPU and memory during these operations. For a **Load (LD)** operation, the MIU retrieves data from a specified memory address and delivers it to the CPU. In a **Store (ST)** operation, the MIU takes data from the CPU and writes it to a specified memory address. The MIU manages the address translation, data transfer, and timing to ensure that these memory operations are performed correctly and without conflicts.
+
+
+<img width="659" alt="MemoryInterface_Schematic" src="https://github.com/user-attachments/assets/0c77e6d5-92fb-46fd-bd53-1a96e0addbbb">
+
+# Memory Module Description
+
+## Inputs:
+- **clk**: Clock signal.
+- **mem_read**: Control signal to read from memory.
+- **mem_write**: Control signal to write to memory.
+- **address**: The 19-bit address where data is either read from or written to.
+- **write_data**: The 19-bit data to be written to memory.
+
+## Outputs:
+- **read_data**: The 19-bit data read from the memory.
+
+Test Case 1: Write 19'h1A2B to memory address 2.
+
+Test Case 2: Read from memory address 2 and check if the data is 19'h1A2B.
+
+Test Case 3: Write 19'h3F4E to memory address 3.
+
+Test Case 4: Read from memory address 3 and check if the data is 19'h3F4E.
+
+Test Case 5: Read from an unwritten memory address (4), and display the result (could show x or unknown values since it hasn't been written to).
+
+<img width="740" alt="ControlUnit_tb" src="https://github.com/user-attachments/assets/a5c36f61-e4d3-41cd-a52c-ca260a0b4a93">
+
+
+
+## Memory Array:
+We define a memory array `memory_array` with 16 locations, each 19 bits wide (you can adjust the size if needed).
+
+## Memory Operations:
+On the positive edge of the clock, the module checks if `mem_write` is asserted. If so, the data in `write_data` is stored at the memory location defined by the lower 4 bits of `address` (so a 4-bit address range is used). If `mem_read` is asserted, the data from the memory location defined by `address` is loaded into `read_data`.
+
+
+
+</details>

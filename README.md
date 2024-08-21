@@ -147,6 +147,9 @@ The `beq` signal is activated to simulate a branch if equal condition.
 Branch if Not Equal (BNE):
 The `bne` signal is activated to simulate a branch if not equal condition.
 
+<img width="740" alt="ControlUnit_tb" src="https://github.com/user-attachments/assets/5efee1e1-f980-46c1-8a63-0d1a69566b89">
+
+
 </details>
 
 <details>
@@ -179,7 +182,8 @@ Test Case 4: Read from memory address 3 and check if the data is 19'h3F4E.
 
 Test Case 5: Read from an unwritten memory address (4), and display the result (could show x or unknown values since it hasn't been written to).
 
-<img width="740" alt="ControlUnit_tb" src="https://github.com/user-attachments/assets/a5c36f61-e4d3-41cd-a52c-ca260a0b4a93">
+<img width="743" alt="MemoryInterface_tb" src="https://github.com/user-attachments/assets/2d7100ea-267e-4208-b4d7-bb87217f510b">
+
 
 
 

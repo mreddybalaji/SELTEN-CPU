@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Thu Aug 22 13:14:30 2024
+# Process ID: 100016
+# Current directory: C:/Users/nirma/OneDrive/Documents/SELTEN-DESIGN/Selten
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent77628 C:\Users\nirma\OneDrive\Documents\SELTEN-DESIGN\Selten\Project_1.xpr
+# Log file: C:/Users/nirma/OneDrive/Documents/SELTEN-DESIGN/Selten/vivado.log
+# Journal file: C:/Users/nirma/OneDrive/Documents/SELTEN-DESIGN/Selten\vivado.jou
+# Running On        :BALAJI
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :22631
+# Processor Detail  :13th Gen Intel(R) Core(TM) i5-1345U
+# CPU Frequency     :2496 MHz
+# CPU Physical cores:10
+# CPU Logical cores :12
+# Host memory       :16849 MB
+# Swap memory       :4563 MB
+# Total Virtual     :21412 MB
+# Available Virtual :7470 MB
+#-----------------------------------------------------------
+start_guioopen_project C:/Users/nirma/OneDrive/Documents/SELTEN-DESIGN/Selten/Project_1.xpruupdate_compile_order -fileset sources_1

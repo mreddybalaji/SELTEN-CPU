@@ -1,0 +1,4 @@
+Time resolution is 1 ps
+Read Data 1: 1010101010101010101
+Read Data 2: 1111111111111111111
+$finish called at time : 90 ns : File "C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/tb_regfile_19bit.v" Line 71

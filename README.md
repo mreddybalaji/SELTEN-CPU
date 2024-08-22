@@ -249,3 +249,44 @@ On the positive edge of the clock, the module checks if `mem_write` is asserted.
 
 
 </details>
+
+
+
+
+
+
+<details>
+  <summary>Register File</summary>
+
+
+
+  ## Register File
+
+  <img width="726" alt="RegisterFile_Schematic" src="https://github.com/user-attachments/assets/8dcbb5a7-bdfe-4a22-a362-eb0b49c1b39f">
+
+
+The `RegisterFile module represents a 19-bit register file with the following features:
+
+- **Inputs:**
+  - **clk:** The clock signal that synchronizes operations.
+  - **rst:** The reset signal that resets the register values.
+  - **read_addr1, read_addr2:** 5-bit addresses for reading data from two registers.
+  - **write_addr:** A 5-bit address to specify which register to write to.
+  - **write_data:** The 19-bit data to be written to the register specified by `write_addr`.
+  - **write_enable:** A control signal that allows writing data to a register when set to high (`1`).
+
+- **Outputs:**
+  - **read_data1, read_data2:** 19-bit outputs that provide the data stored at the registers specified by `read_addr1` and `read_addr2`.
+ 
+
+  <img width="742" alt="RegisterFile_tb" src="https://github.com/user-attachments/assets/bae8cc42-3c7f-453e-8ac0-ae4802315f0e">
+
+
+- **Internal Logic:**
+  - The register file contains 32 registers, each 19 bits wide, stored in an array called `regfile`.
+  - **Read Operations:** The values stored in the registers at addresses `read_addr1` and `read_addr2` are continuously assigned to the outputs `read_data1` and `read_data2`.
+  - **Write Operations:** When the `write_enable` signal is high and the clock signal rises, the data in `write_data` is written to the register at the `write_addr` address. If the `rst` signal is high, the register specified by `write_addr` is reset to `0`.
+
+
+
+ 

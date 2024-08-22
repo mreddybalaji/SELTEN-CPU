@@ -1,6 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/ALU.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module ALU
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/Control_Unit_tb.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module ALU_tb
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/nirma/OneDrive/Documents/SELTEN-DESIGN/project_1/project_1.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module glbl

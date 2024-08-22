@@ -1,0 +1,181 @@
+`timescale 1ns  1ps
+
+module CPU(
+    input wire clk,
+    input wire rst
+);
+
+     Pipeline registers
+    reg [180] IF_ID_PC, IF_ID_Instruction;
+    reg [180] ID_EX_PC, ID_EX_ReadData1, ID_EX_ReadData2, ID_EX_Imm;
+    reg [40]  ID_EX_Rt, ID_EX_Rd;
+    reg [30]  ID_EX_ALUOp;
+    reg        ID_EX_ALUSrc, ID_EX_RegDst, ID_EX_MemRead, ID_EX_MemWrite, ID_EX_MemToReg, ID_EX_RegWrite;
+    reg [180] EX_MEM_ALUResult, EX_MEM_WriteData;
+    reg [40]  EX_MEM_WriteRegAddr;
+    reg        EX_MEM_MemRead, EX_MEM_MemWrite, EX_MEM_MemToReg, EX_MEM_RegWrite;
+    reg [180] MEM_WB_ReadData, MEM_WB_ALUResult;
+    reg [40]  MEM_WB_WriteRegAddr;
+    reg        MEM_WB_MemToReg, MEM_WB_RegWrite;
+
+
+     Internal signals
+    wire [180] pc_next, instruction;
+    wire [180] pc_current_wire;   New wire to connect pc_current
+    wire [30] opcode;
+    wire [180] alu_result, custom_result, mem_read_data;
+    wire [180] reg_read_data1, reg_read_data2;
+    wire [180] write_data;
+    wire zero_flag;
+
+     Control signals
+    wire jump, beq, bne, call, ret;
+    wire [30] alu_op;
+
+     Instruction decode
+    assign opcode = IF_ID_Instruction[1815];
+
+     ALU
+    ALU alu_unit (
+        .result(alu_result),
+        .zero(zero_flag),
+        .a(ID_EX_ReadData1),
+        .b(ID_EX_ALUSrc  ID_EX_Imm  ID_EX_ReadData2),
+        .alu_control(ID_EX_ALUOp)
+    );
+
+     Control Unit (handles jumps, branches, call, and return)
+    Control_Unit control_unit (
+        .clk(clk),
+        .jump(jump),
+        .beq(beq),
+        .bne(bne),
+        .call(call),
+        .ret(ret),
+        .pc_current(pc_current_wire),   Connect to wire
+        .zero_flag(zero_flag),
+        .ALU_out(alu_result),
+        .pc_next(pc_next)
+    );
+
+     Custom Instruction Unit
+    Custom_Instruction_Unit custom_unit (
+        .clk(clk),
+        .opcode(ID_EX_ALUOp),
+        .r1(ID_EX_ReadData1),
+        .r2(ID_EX_ReadData2),
+        .result(custom_result)
+    );
+
+     Memory Interface
+    Memory_Interface memory (
+        .clk(clk),
+        .mem_read(EX_MEM_MemRead),
+        .mem_write(EX_MEM_MemWrite),
+        .address(EX_MEM_ALUResult),
+        .write_data(EX_MEM_WriteData),
+        .read_data(mem_read_data)
+    );
+
+     Register File
+    regfile_19bit reg_file (
+        .clk(clk),
+        .rst(rst),
+        .read_addr1(IF_ID_Instruction[1410]),
+        .read_addr2(IF_ID_Instruction[95]),
+        .write_addr(MEM_WB_WriteRegAddr),
+        .write_data(write_data),
+        .write_enable(MEM_WB_RegWrite),
+        .read_data1(reg_read_data1),
+        .read_data2(reg_read_data2)
+    );
+
+     Instruction Memory (simplified)
+    reg [180] instr_memory [2550];
+    assign instruction = instr_memory[IF_ID_PC[70]];
+
+     Write-back multiplexer
+    assign write_data = MEM_WB_MemToReg  MEM_WB_ReadData  MEM_WB_ALUResult;
+
+     PC update logic (simplified)
+    assign pc_next = IF_ID_PC + 1;
+
+     Pipeline stages
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+             Reset all pipeline registers
+            IF_ID_PC = 19'b0;
+            IF_ID_Instruction = 19'b0;
+            ID_EX_PC = 19'b0;
+            ID_EX_ReadData1 = 19'b0;
+            ID_EX_ReadData2 = 19'b0;
+            ID_EX_Imm = 19'b0;
+            ID_EX_Rt = 5'b0;
+            ID_EX_Rd = 5'b0;
+            ID_EX_ALUOp = 4'b0;
+            ID_EX_ALUSrc = 1'b0;
+            ID_EX_RegDst = 1'b0;
+            ID_EX_MemRead = 1'b0;
+            ID_EX_MemWrite = 1'b0;
+            ID_EX_MemToReg = 1'b0;
+            ID_EX_RegWrite = 1'b0;
+            EX_MEM_ALUResult = 19'b0;
+            EX_MEM_WriteData = 19'b0;
+            EX_MEM_WriteRegAddr = 5'b0;
+            EX_MEM_MemRead = 1'b0;
+            EX_MEM_MemWrite = 1'b0;
+            EX_MEM_MemToReg = 1'b0;
+            EX_MEM_RegWrite = 1'b0;
+            MEM_WB_ReadData = 19'b0;
+            MEM_WB_ALUResult = 19'b0;
+            MEM_WB_WriteRegAddr = 5'b0;
+            MEM_WB_MemToReg = 1'b0;
+            MEM_WB_RegWrite = 1'b0;
+        end
+        else begin
+             IF stage
+            IF_ID_PC = pc_current_wire;   Assign wire to register
+            IF_ID_Instruction = instruction;
+
+             ID stage
+            ID_EX_PC = IF_ID_PC;
+            ID_EX_ReadData1 = reg_read_data1;
+            ID_EX_ReadData2 = reg_read_data2;
+            ID_EX_Imm = IF_ID_Instruction[140];
+            ID_EX_Rt = IF_ID_Instruction[95];
+            ID_EX_Rd = IF_ID_Instruction[40];
+            ID_EX_ALUOp = alu_op;
+            ID_EX_ALUSrc = 1'b0;   Simplified as no direct ALU control in current setup
+            ID_EX_RegDst = 1'b0;   Simplified as no direct ALU control in current setup
+            ID_EX_MemRead = 1'b0;  Simplified as no direct memory control in current setup
+            ID_EX_MemWrite = 1'b0;  Simplified as no direct memory control in current setup
+            ID_EX_MemToReg = 1'b0;  Simplified as no direct memory control in current setup
+            ID_EX_RegWrite = 1'b0;  Simplified as no direct register control in current setup
+
+             EX stage
+            EX_MEM_ALUResult = alu_result;
+            EX_MEM_WriteData = ID_EX_ReadData2;
+            EX_MEM_WriteRegAddr = ID_EX_RegDst  ID_EX_Rd  ID_EX_Rt;
+            EX_MEM_MemRead = ID_EX_MemRead;
+            EX_MEM_MemWrite = ID_EX_MemWrite;
+            EX_MEM_MemToReg = ID_EX_MemToReg;
+            EX_MEM_RegWrite = ID_EX_RegWrite;
+
+             MEM stage
+            MEM_WB_ReadData = mem_read_data;
+            MEM_WB_ALUResult = EX_MEM_ALUResult;
+            MEM_WB_WriteRegAddr = EX_MEM_WriteRegAddr;
+            MEM_WB_MemToReg = EX_MEM_MemToReg;
+            MEM_WB_RegWrite = EX_MEM_RegWrite;
+        end
+    end
+
+     Initialize instruction memory (for simulation purposes)
+    initial begin
+         You can add some test instructions here
+        instr_memory[0] = 19'h00000;  NOP
+        instr_memory[1] = 19'h10001;  Example instruction
+         Add more instructions as needed
+    end
+
+endmodule

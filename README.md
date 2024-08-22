@@ -19,6 +19,14 @@
 <img width="748" alt="image" src="https://github.com/user-attachments/assets/cd10b2b6-d457-411e-a188-e44bc4ca1287">
 
 
+### ISA
+
+
+| Opcode (4 bits)  | rs1 (4 bits) | rs2 (4 bits) | rd (4 bits) | Immediate (7 bits) | Function Code (4 bits) |
+|------------------|--------------|--------------|-------------|--------------------|------------------------|
+
+
+
   ## Key Components and Design Considerations
   
   ### 1. Word Size and Data Width
@@ -134,7 +142,10 @@ The ALU in the provided Verilog code has the following features:
 
 ## Inputs:
 - Two 19-bit operands.
-- A 4-bit control signal to select the operation. 
+- A 4-bit control signal to select the operation.
+
+  | Opcode: 0001 | rs1: 0010 | rs2: 0011 | rd: 0100 | Immediate: 0000000 | Function Code: 0000 |
+
 
 ## Outputs:
 - A 19-bit result that holds the outcome of the operation.

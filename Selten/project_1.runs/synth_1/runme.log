@@ -1,0 +1,47 @@
+
+*** Running vivado
+    with args -log CPU.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source CPU.tcl
+
+
+
+****** Vivado v2024.1 (64-bit)
+  **** SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+  **** IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+  **** SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+  **** Start of session at: Thu Aug 22 13:04:12 2024
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source CPU.tcl -notrace
+create_project: Time (s): cpu = 00:00:00 ; elapsed = 00:00:06 . Memory (MB): peak = 513.398 ; gain = 201.375
+Command: read_checkpoint -auto_incremental -incremental C:/Users/nirma/OneDrive/Documents/SELTEN-DESIGN/project_1/project_1.srcs/utils_1/imports/synth_1/CPU.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/nirma/OneDrive/Documents/SELTEN-DESIGN/project_1/project_1.srcs/utils_1/imports/synth_1/CPU.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top CPU -part xc7z020clg484-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 62684
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:09 . Memory (MB): peak = 979.578 ; gain = 449.441
+---------------------------------------------------------------------------------
+INFO: [Synth 8-11241] undeclared symbol 'clk', assumed default net type 'wire' [C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/ALU.v:16]
+INFO: [Synth 8-11241] undeclared symbol 'rst', assumed default net type 'wire' [C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/ALU.v:17]
+INFO: [Synth 8-6157] synthesizing module 'CPU' [C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/CPU.v:3]
+INFO: [Synth 8-6157] synthesizing module 'ALU' [C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/ALU.v:1]
+ERROR: [Synth 8-439] module 'Divider' not found [C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/ALU.v:15]
+ERROR: [Synth 8-6156] failed synthesizing module 'ALU' [C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/ALU.v:1]
+ERROR: [Synth 8-6156] failed synthesizing module 'CPU' [C:/Users/nirma/OneDrive/Documents/AA_GITHUB/testing/CPU.v:3]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:10 . Memory (MB): peak = 1088.188 ; gain = 558.051
+---------------------------------------------------------------------------------
+synthesize failed
+INFO: [Common 17-83] Releasing license: Synthesis
+13 Infos, 0 Warnings, 0 Critical Warnings and 4 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Vivado Synthesis failed
+INFO: [Common 17-206] Exiting Vivado at Thu Aug 22 13:04:33 2024...

@@ -71,6 +71,53 @@
 
 </details>
 
+
+<details>
+  <summary>pipelining</summary>
+  
+   ## Pipeline in CPU Architecture
+
+A pipeline in CPU architecture is a technique used to increase instruction throughput by dividing the instruction execution process into multiple stages. Each stage of the pipeline handles a different part of the instruction cycle (fetch, decode, execute, etc.), allowing multiple instructions to be processed simultaneously. This parallel processing improves overall CPU efficiency and performance.
+
+## Pipeline Stages in Selten
+
+In this CPU design, we are using a **5-stage pipeline**. The five stages are:
+
+1. **Instruction Fetch (IF)**
+2. **Instruction Decode (ID)**
+3. **Execution (EX)**
+4. **Memory Access (MEM)**
+5. **Write-Back (WB)**
+
+
+The 5-stage pipeline is a standard design in CPU architectures because it allows for efficient processing of instructions while maintaining a balanced workload across the different functional units of the CPU. Each stage focuses on a specific part of the instruction cycle, helping to minimize idle time and maximize the use of CPU resources.
+
+## Components and Their Corresponding Pipeline Stages
+
+- **Register File**:
+  - **Pipeline Stage: Instruction Decode (ID)**
+  - **Role:** The register file is accessed during the ID stage to read the operands (register data) required for the instruction. These operands are then passed to the Execution stage.
+
+- **ALU (Arithmetic Logic Unit)**:
+  - **Pipeline Stage: Execution (EX)**
+  - **Role:** The ALU performs arithmetic or logical operations on the operands provided by the Register File. The result of the ALU operation is then passed to the Memory Access stage or directly to the Write-Back stage if no memory operation is required.
+
+- **Memory Interface**:
+  - **Pipeline Stage: Memory Access (MEM)**
+  - **Role:** The Memory Interface handles data memory operations. If the instruction requires reading from or writing to memory, this stage accesses the memory and either retrieves the data or stores the data based on the ALU's result.
+
+- **Control Unit**:
+  - **Pipeline Stage: Instruction Decode (ID)**
+  - **Role:** The Control Unit generates control signals that dictate the operation of the ALU, memory, and other parts of the CPU. These signals determine the flow of data through the pipeline and ensure that each stage performs the correct operation.
+
+This 5-stage pipeline structure effectively breaks down the instruction execution into manageable parts, allowing the CPU to work on multiple instructions simultaneously and thereby improving overall performance.
+
+
+  
+
+</details>
+
+
 <details>
   <summary>Arithmetic Logic Unit (ALU)</summary>
   

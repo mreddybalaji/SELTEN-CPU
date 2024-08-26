@@ -5,7 +5,7 @@
 //
 // Create Date:    21.08.2024 19:16:50
 // Design Name:    
-// Module Name:    iiitb_rv19i
+// Module Name:    Selten_rv19i
 // Project Name:   
 // Target Device:  
 // Tool versions:  
@@ -18,7 +18,7 @@
 // Additional Comments:
 // 
 ////////////////////////////////////////////////////////////////////////////////
-module iiitb_rv19i(clk, RN, NPC, WB_OUT);
+module Selten_rv19i(clk, RN, NPC, WB_OUT);
 input clk;
 input RN;
 integer k;
